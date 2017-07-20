@@ -26,7 +26,7 @@ func main() {
 }
 
 // Init resets all the things
-func (t *KYCChainCode) Init(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
+func (t *KYCChainCode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 
 	value,_ := json.Marshal(true)
     err := stub.PutState("initStatus", value)
