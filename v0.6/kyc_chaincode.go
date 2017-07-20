@@ -37,7 +37,7 @@ func (t *KYCChainCode) Init(stub shim.ChaincodeStubInterface, function string, a
 }
 
 // Invoke isur entry point to invoke a chaincode function
-func (t *KYCChainCode) Invoke(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
+func (t *KYCChainCode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Println("invoke is running " + function)
 
 	// Handle different functions
@@ -69,7 +69,7 @@ func (t *KYCChainCode) Query(stub *shim.ChaincodeStub, function string, args []s
 
 // Set stores the asset (both key and value) on the ledger. If the key exists,
 // it will override the value with the new one
-func (t *SimpleChaincode) set(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *KYCChainCode) set(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
     if len(args) != 2 {
             return "", fmt.Errorf("Incorrect arguments. Expecting arg1 = gci and arg2 = name")
     }
