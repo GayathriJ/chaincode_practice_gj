@@ -71,7 +71,7 @@ func (t *KYCChainCode) Query(stub shim.ChaincodeStubInterface, function string, 
 // it will override the value with the new one
 func (t *KYCChainCode) set(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
     if len(args) != 2 {
-            return "", fmt.Errorf("Incorrect arguments. Expecting arg1 = gci and arg2 = name")
+            return nil, fmt.Errorf("Incorrect arguments. Expecting arg1 = gci and arg2 = name")
     }
 
     var currentKYCDataObj KYCData
@@ -96,23 +96,23 @@ func (t *KYCChainCode) set(stub shim.ChaincodeStubInterface, args []string) ([]b
 
     err := stub.PutState(args[0], updatedKYCDataObjBlocksAsBytes)
     if err != nil {
-            return "", fmt.Errorf("Failed to add KYC details for GCI : %s", args[0])
+            return nil, fmt.Errorf("Failed to add KYC details for GCI : %s", args[0])
     }
-    return "success", nil
+    return []byte("success"), nil
 }
 
 // Get returns the value of the specified asset key
 func (t *KYCChainCode) get(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
     if len(args) != 1 {
-            return "", fmt.Errorf("Incorrect arguments. Expecting a key")
+            return nil, fmt.Errorf("Incorrect arguments. Expecting a key")
     }
 
     KYCDataObjBlocksAsBytes, err := stub.GetState(args[0])
     if err != nil {
-            return "", fmt.Errorf("Failed to get asset: %s with error: %s", args[0], err)
+            return nil, fmt.Errorf("Failed to get asset: %s with error: %s", args[0], err)
     }
     if KYCDataObjBlocksAsBytes == nil {
-            return "", fmt.Errorf("Asset not found: %s", args[0])
+            return nil, fmt.Errorf("Asset not found: %s", args[0])
     }
 
     return KYCDataObjBlocksAsBytes, nil
